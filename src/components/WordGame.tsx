@@ -52,8 +52,8 @@ const WordGame: React.FC<WordGameProps> = ({ themeWord, themeWords, initialGrid 
       const isHorizontal = startCell.row === endCell.row;
       
       // Calculate the position and size of the word
-      const startX = Math.min(startCell.col, endCell.col) * cellSize + gridPadding;
-      const startY = Math.min(startCell.row, endCell.row) * cellSize + gridPadding;
+      const startX = Math.min(startCell.col, endCell.col) * cellSize + gridPadding - 44;
+      const startY = Math.min(startCell.row, endCell.row) * cellSize + gridPadding - 88;
       const width = isHorizontal 
         ? (Math.abs(endCell.col - startCell.col) + 1) * cellSize - 2 // Subtract 2px for the gap
         : cellSize - 2;
