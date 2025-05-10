@@ -5,14 +5,16 @@ import './App.css';
 
 // Sample puzzle data
 const themeWord = "ANIMALS";
-const themeWords = ["CAT", "DOG", "BIRD", "FISH", "BEAR", "LION"];
+const themeWords = ["CAT", "DOG", "BIRD", "FISH", "BEAR", "LION", "TIGER", "WOLF", "FROG", "SNAKE"];
 const initialGrid = [
-  ['C', 'A', 'T', 'D', 'O', 'G'],
-  ['B', 'I', 'R', 'D', 'F', 'I'],
-  ['S', 'H', 'B', 'E', 'A', 'R'],
-  ['L', 'I', 'O', 'N', 'M', 'A'],
-  ['P', 'E', 'N', 'G', 'U', 'I'],
-  ['N', 'S', 'L', 'O', 'T', 'S']
+  ['C', 'A', 'T', 'D', 'O', 'G', 'W', 'F'],
+  ['B', 'I', 'R', 'D', 'F', 'I', 'O', 'R'],
+  ['S', 'H', 'B', 'E', 'A', 'R', 'L', 'O'],
+  ['L', 'I', 'O', 'N', 'T', 'I', 'F', 'G'],
+  ['P', 'E', 'N', 'G', 'U', 'I', 'N', 'S'],
+  ['S', 'N', 'A', 'K', 'E', 'G', 'E', 'R'],
+  ['T', 'I', 'G', 'E', 'R', 'A', 'T', 'L'],
+  ['M', 'O', 'U', 'S', 'E', 'L', 'K', 'Y']
 ];
 
 function App() {

@@ -2,175 +2,159 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  padding: 15px;
-  max-width: 800px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 20px;
   position: relative;
 }
 
 .grid-container {
+  margin-bottom: 20px;
   position: relative;
 }
 
 .game-info {
-  background-color: #2c3e50;
-  padding: 15px;
-  border-radius: 8px;
-  color: white;
   width: 100%;
-  position: relative;
-  z-index: 1;
+  text-align: center;
+  margin-top: 20px;
 }
 
-.game-info h3 {
-  margin: 0 0 10px 0;
-  color: #3498db;
-}
-
-.game-info ul {
-  list-style: none;
-  padding: 0;
+.found-words-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
+  justify-content: center;
+  gap: 10px;
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
 }
 
-.game-info li {
+.found-words-list li {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  min-width: 60px;
+  text-align: center;
+}
+
+.found-words-list li.found {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.found-words-list li.not-found {
   background-color: #34495e;
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 16px;
-  animation: fadeIn 0.3s ease-in;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .game-complete {
-  margin-top: 10px;
+  margin-top: 20px;
   text-align: center;
-  color: #2ecc71;
-  animation: fadeIn 0.5s ease-in;
-  background-color: rgba(46, 204, 113, 0.1);
-  padding: 15px;
-  border-radius: 8px;
-  border: 2px solid #2ecc71;
-}
-
-.game-complete h2 {
-  margin: 0 0 10px 0;
-  font-size: 24px;
-}
-
-.game-complete p {
-  margin: 0;
-  font-size: 18px;
-  color: #27ae60;
+  color: #f39c12;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .animated-word {
   position: absolute;
-  background-color: #e74c3c;
-  color: white;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  background-color: rgba(231, 76, 60, 0.8);
+  color: white;
+  border-radius: 5px;
   font-weight: bold;
-  pointer-events: none;
-  z-index: 2;
-  animation: wordTravel 1s ease-out forwards;
-  transform-origin: center center;
-  border-radius: 4px;
+  font-size: 24px;
+  animation: wordFound 1s ease-in-out forwards;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Tutorial Modal Styles */
+.tutorial-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #34495e;
+  color: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  outline: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
 .tutorial-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 1000;
 }
 
-.tutorial-modal {
-  background-color: #2c3e50;
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 500px;
-  width: 90%;
-  position: relative;
-  outline: none;
-  color: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
 .tutorial-content {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .tutorial-content h2 {
-  color: #3498db;
-  margin: 0 0 20px 0;
-  font-size: 28px;
+  text-align: center;
+  margin: 0;
+  color: #f39c12;
 }
 
 .tutorial-steps {
-  text-align: left;
-  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .tutorial-steps p {
-  margin: 12px 0;
-  font-size: 16px;
+  margin: 0;
   line-height: 1.5;
 }
 
-.tutorial-steps strong {
-  color: #3498db;
-}
-
 .tutorial-content button {
-  background-color: #3498db;
+  padding: 10px 20px;
+  background-color: #f39c12;
   color: white;
   border: none;
-  padding: 12px 30px;
-  font-size: 18px;
-  border-radius: 6px;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  align-self: center;
+  margin-top: 10px;
+  transition: background-color 0.3s;
 }
 
 .tutorial-content button:hover {
-  background-color: #2980b9;
+  background-color: #e67e22;
+}
+
+@keyframes wordFound {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes wordTravel {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(calc(100vh - 200px)) scale(0.8);
-    opacity: 0;
   }
 } 

@@ -16,24 +16,36 @@ const WordGrid: React.FC<WordGridProps> = ({ themeWord, grid, onWordFound }) => 
   const [rotatingCells, setRotatingCells] = useState<Set<string>>(new Set());
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const rotateQuadrant = useCallback((row: number, col: number) => {
-    if (row >= 5 || col >= 5) return;
+  // Calculate which fixed 2x2 block a cell belongs to
+  const getBlockCoordinates = useCallback((row: number, col: number) => {
+    // Get the top-left coordinate of the 2x2 block
+    const blockRow = Math.floor(row / 2) * 2;
+    const blockCol = Math.floor(col / 2) * 2;
+    return { blockRow, blockCol };
+  }, []);
+
+  // Rotate the fixed 2x2 block that contains the clicked cell
+  const rotateBlock = useCallback((row: number, col: number) => {
+    const { blockRow, blockCol } = getBlockCoordinates(row, col);
     
-    // Add rotating class to all cells in the quadrant
+    // Check if the block is fully within the grid
+    if (blockRow + 1 >= localGrid.length || blockCol + 1 >= localGrid[0].length) return;
+    
+    // Add rotating class to all cells in the block
     const quadrantCells = new Set<string>();
-    for (let r = row; r <= row + 1; r++) {
-      for (let c = col; c <= col + 1; c++) {
+    for (let r = blockRow; r <= blockRow + 1; r++) {
+      for (let c = blockCol; c <= blockCol + 1; c++) {
         quadrantCells.add(`${r}-${c}`);
       }
     }
     setRotatingCells(quadrantCells);
     
     const newGrid = [...localGrid.map(row => [...row])];
-    const temp = newGrid[row][col];
-    newGrid[row][col] = newGrid[row + 1][col];
-    newGrid[row + 1][col] = newGrid[row + 1][col + 1];
-    newGrid[row + 1][col + 1] = newGrid[row][col + 1];
-    newGrid[row][col + 1] = temp;
+    const temp = newGrid[blockRow][blockCol];
+    newGrid[blockRow][blockCol] = newGrid[blockRow + 1][blockCol];
+    newGrid[blockRow + 1][blockCol] = newGrid[blockRow + 1][blockCol + 1];
+    newGrid[blockRow + 1][blockCol + 1] = newGrid[blockRow][blockCol + 1];
+    newGrid[blockRow][blockCol + 1] = temp;
     
     setLocalGrid(newGrid);
     
@@ -42,7 +54,7 @@ const WordGrid: React.FC<WordGridProps> = ({ themeWord, grid, onWordFound }) => 
       setRotatingCells(new Set());
       setHoveredCell(null);
     }, 300);
-  }, [localGrid]);
+  }, [localGrid, getBlockCoordinates]);
 
   const getCellFromEvent = (event: React.MouseEvent | MouseEvent) => {
     if (!gridRef.current) return null;
@@ -51,20 +63,18 @@ const WordGrid: React.FC<WordGridProps> = ({ themeWord, grid, onWordFound }) => 
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
     
-    const cellSize = 62; // 60px + 2px gap
+    const cellSize = 52; // 50px + 2px gap
     const col = Math.floor(x / cellSize);
     const row = Math.floor(y / cellSize);
     
-    if (row >= 0 && row < 6 && col >= 0 && col < 6) {
+    if (row >= 0 && row < localGrid.length && col >= 0 && col < localGrid[0].length) {
       return { row, col };
     }
     return null;
   };
 
   const handleCellClick = (row: number, col: number) => {
-    if (row < 5 && col < 5) {
-      rotateQuadrant(row, col);
-    }
+    rotateBlock(row, col);
   };
 
   const handleMouseDown = (event: React.MouseEvent) => {
@@ -114,11 +124,7 @@ const WordGrid: React.FC<WordGridProps> = ({ themeWord, grid, onWordFound }) => 
   };
 
   const handleCellHover = (row: number, col: number) => {
-    if (row < 5 && col < 5) {
-      setHoveredCell({ row, col });
-    } else {
-      setHoveredCell(null);
-    }
+    setHoveredCell({ row, col });
   };
 
   React.useEffect(() => {
@@ -171,12 +177,10 @@ const WordGrid: React.FC<WordGridProps> = ({ themeWord, grid, onWordFound }) => 
 
   const isRotationPreview = (row: number, col: number) => {
     if (!hoveredCell) return false;
-    return (row === hoveredCell.row || row === hoveredCell.row + 1) &&
-           (col === hoveredCell.col || col === hoveredCell.col + 1);
-  };
-
-  const isTopLeftOfQuadrant = (row: number, col: number) => {
-    return row === hoveredCell?.row && col === hoveredCell?.col;
+    
+    const { blockRow, blockCol } = getBlockCoordinates(hoveredCell.row, hoveredCell.col);
+    return (row === blockRow || row === blockRow + 1) &&
+           (col === blockCol || col === blockCol + 1);
   };
 
   return (

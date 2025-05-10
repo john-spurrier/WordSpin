@@ -47,7 +47,7 @@ const WordGame: React.FC<WordGameProps> = ({ themeWord, themeWords, initialGrid 
       const gridRect = gridRef.current?.getBoundingClientRect();
       if (!gridRect) return;
 
-      const cellSize = 62; // 60px + 2px gap
+      const cellSize = 52; // 50px + 2px gap
       const gridPadding = 8; // Grid padding from WordGrid.css
       const isHorizontal = startCell.row === endCell.row;
       
@@ -65,8 +65,8 @@ const WordGame: React.FC<WordGameProps> = ({ themeWord, themeWords, initialGrid 
         word,
         id: nextWordId.current++,
         position: { 
-          x: startX + 28,
-          y: startY + 109,
+          x: startX + gridRect.left,
+          y: startY + gridRect.top,
           width,
           height
         }
@@ -106,10 +106,12 @@ const WordGame: React.FC<WordGameProps> = ({ themeWord, themeWords, initialGrid 
         />
       </div>
       <div className="game-info">
-        <h3>Found Words:</h3>
-        <ul>
-          {foundWords.map((word, index) => (
-            <li key={index}>{word}</li>
+        <h3>Found Words: {foundWords.length}/{themeWords.length}</h3>
+        <ul className="found-words-list">
+          {themeWords.map((word, index) => (
+            <li key={index} className={foundWords.includes(word) ? 'found' : 'not-found'}>
+              {foundWords.includes(word) ? word : '???'}
+            </li>
           ))}
         </ul>
         {gameComplete && (
@@ -143,9 +145,10 @@ const WordGame: React.FC<WordGameProps> = ({ themeWord, themeWords, initialGrid 
           <h2>How to Play</h2>
           <div className="tutorial-steps">
             <p>1. Find words by clicking and dragging across letters in a straight line (horizontally or vertically)</p>
-            <p>2. Click on any 2x2 quadrant to rotate its letters</p>
-            <p>3. Find all the theme words to win!</p>
-            <p>4. The theme word for this puzzle is: <strong>{themeWord}</strong></p>
+            <p>2. Click on any cell to rotate its fixed 2x2 block</p>
+            <p>3. Each 2x2 block rotates as a unit (clockwise)</p>
+            <p>4. Find all the theme words to win!</p>
+            <p>5. The theme word for this puzzle is: <strong>{themeWord}</strong></p>
           </div>
           <button onClick={() => setShowTutorial(false)}>Got it!</button>
         </div>
