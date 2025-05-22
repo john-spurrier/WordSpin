@@ -25,7 +25,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Word Puzzle Game</h1>
+        <h1>Word Spin</h1>
       </header>
       <main>
         <WordGame
