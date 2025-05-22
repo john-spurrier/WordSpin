@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import WordGame from './components/WordGame';
 import Modal from 'react-modal';
 import './App.css';
@@ -7,8 +7,8 @@ import './App.css';
 const themeWord = "ANIMALS";
 const themeWords = ["CAT", "DOG", "BIRD", "FISH", "BEAR", "LION", "TIGER", "WOLF", "FROG", "SNAKE"];
 const initialGrid = [
-  ['C', 'A', 'T', 'D', 'O', 'G', 'W', 'F'],
-  ['B', 'I', 'R', 'D', 'F', 'I', 'O', 'R'],
+  ['B', 'C', 'T', 'D', 'O', 'G', 'W', 'F'],
+  ['I', 'A', 'R', 'D', 'F', 'I', 'O', 'R'],
   ['S', 'H', 'B', 'E', 'A', 'R', 'L', 'O'],
   ['L', 'I', 'O', 'N', 'T', 'I', 'F', 'G'],
   ['P', 'E', 'N', 'G', 'U', 'I', 'N', 'S'],
